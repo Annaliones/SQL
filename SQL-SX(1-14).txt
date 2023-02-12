@@ -1,0 +1,89 @@
+Запрос 1:
+Найдите номер модели, скорость и размер жесткого диска для всех ПК стоимостью менее 500 дол. Вывести: model, speed и hd
+Запрос 1:
+SELECT DISTINCT model, speed, hd FROM PC 
+WHERE price < '500';
+
+Задание 2:
+Найдите производителей принтеров. Вывести: maker
+Запрос 2:
+SELECT DISTINCT maker FROM Product 
+WHERE type = 'Printer';
+
+Задание 3:
+Найдите номер модели, объем памяти и размеры экранов ПК-блокнотов, цена которых превышает 1000 дол.
+Запрос 3:
+SELECT model, ram, screen FROM Laptop 
+WHERE price > 1000;
+
+Задание 4:
+Найдите все записи таблицы Printer для цветных принтеров.
+Запрос 4:
+SELECT * FROM Printer 
+WHERE color = 'y';
+
+Задание 5:
+Найдите номер модели, скорость и размер жесткого диска ПК, имеющих 12x или 24x CD и цену менее 600 дол.
+Запрос 5:
+SELECT model, speed, hd FROM PC 
+WHERE cd = '12x' AND price < '600' OR cd = '24x' AND price < '600';
+
+Задание 6:
+Для каждого производителя, выпускающего ПК-блокноты c объёмом жесткого диска не менее 10 Гбайт, найти скорости таких ПК-блокнотов. Вывод: производитель, скорость.
+Запрос 6:
+SELECT DISTINCT Product.maker, Laptop.speed AS speed_1
+FROM Product 
+INNER JOIN Laptop ON Product.model = Laptop.model 
+WHERE Laptop.hd >= 10;
+
+Задание 8:
+Найдите производителя, выпускающего ПК, но не ПК-блокноты.
+Запрос 8:
+SELECT DISTINCT maker FROM product 
+WHERE type='pc'AND maker NOT IN(
+SELECT maker 
+FROM product 
+WHERE type='laptop');
+
+Задание 9:
+Найдите производителей ПК с процессором не менее 450 Мгц. Вывести: Maker
+Запрос 9:
+SELECT DISTINCT maker 
+FROM product
+INNER JOIN pc
+ON product.model = pc.model
+WHERE speed >=450;
+
+Задание 10:
+Найдите модели принтеров, имеющих самую высокую цену. Вывести: model, price
+Запрос 10:
+SELECT model, price 
+FROM Printer 
+WHERE price = (SELECT MAX(price) FROM printer);
+
+Задание 11:
+Найдите среднюю скорость ПК.
+Запрос 11:
+SELECT AVG(speed) FROM PC;
+
+Задание 12:
+Найдите среднюю скорость ПК-блокнотов, цена которых превышает 1000 дол.
+Запрос 12:
+SELECT AVG(speed) 
+FROM Laptop 
+WHERE price > 1000;
+
+Задание 13:
+Найдите среднюю скорость ПК, выпущенных производителем A.
+Запрос 13:
+SELECT AVG(pc.speed) FROM pc
+INNER JOIN product
+ON pc.model = product.model
+WHERE maker = 'A';
+
+Задание 14:
+Найдите класс, имя и страну для кораблей из таблицы Ships, имеющих не менее 10 орудий.
+Запрос 14:
+SELECT Ships.class, Ships.name, Classes.country 
+FROM Ships INNER JOIN Classes ON Ships.class = Classes.class 
+WHERE Classes.numGuns >=10;
